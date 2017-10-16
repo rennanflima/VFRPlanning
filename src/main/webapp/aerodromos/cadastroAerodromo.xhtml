@@ -12,10 +12,14 @@
 
     <ui:define name="corpo">
         <f:metadata>
-            <!--<o:viewParam name="aerodromo" value="#{cadastroAerodromoBean.aerodromo}" />-->
+            <o:viewParam name="aerodromo" value="#{cadastroAerodromoBean.aerodromo}" />
+            <f:viewAction action="#{cadastroAerodromoBean.inicializar}" />
         </f:metadata>
 
-        <h:form>
+        <h:form id="frm">
+        
+        	<p:focus context="frm" />
+        
             <h1>#{cadastroAerodromoBean.editando ? 'Edição de aerodromo' : 'Novo aerodromo'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
@@ -24,7 +28,8 @@
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/aerodromos/cadastroAerodromo" />
                     <p:commandButton value="Salvar" id="botaoSalvar"
-                                     action="#{cadastroAerodromoBean.salvar}" update="@form" />
+                                     action="#{cadastroAerodromoBean.salvar}" update="@form"
+	    							validateClient="false" />
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Pesquisa" outcome="/aerodromos/pesquisaAerodromos" />
@@ -43,14 +48,14 @@
                 <p:outputLabel value="Município" for="municipio"/>
                 <p:inputText id="municipio" size="60" maxlength="80" value="#{cadastroAerodromoBean.aerodromo.municipio}"/>
                 
-                <p:outputLabel value="Município" for="elevacao"/>
-                <p:inputNumber id="elevacao" value="#{cadastroAerodromoBean.aerodromo.elevacao}"/>
+                <p:outputLabel value="Elevação" for="elevacao"/>
+                <p:spinner id="elevacao" value="#{cadastroAerodromoBean.aerodromo.elevacao}"/>
                 
                 <p:outputLabel value="Cabeceira 1" for="cabeceira1"/>
-                <p:inputNumber id="cabeceira1" value="#{cadastroAerodromoBean.aerodromo.cabeceira1}"/>
+                <p:spinner id="cabeceira1" value="#{cadastroAerodromoBean.aerodromo.cabeceira1}"/>
                 
                 <p:outputLabel value="Cabeceira 1" for="cabeceira2"/>
-                <p:inputNumber id="cabeceira2" value="#{cadastroAerodromoBean.aerodromo.cabeceira2}"/>
+                <p:spinner id="cabeceira2" value="#{cadastroAerodromoBean.aerodromo.cabeceira2}"/>
 
             </p:panelGrid>
         </h:form>
