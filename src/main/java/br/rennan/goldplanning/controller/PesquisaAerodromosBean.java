@@ -12,6 +12,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+
 import br.rennan.goldplanning.model.Aerodromo;
 import br.rennan.goldplanning.repository.Aerodromos;
 import br.rennan.goldplanning.repository.filter.AerodromoFilter;
@@ -54,7 +56,6 @@ public class PesquisaAerodromosBean implements Serializable {
 
     public void pesquisar() {
         aerodromosFiltrados = aerodromos.filtrados(filtro);
-        System.out.println(aerodromosFiltrados.size());
     }
 
     public AerodromoFilter getFiltro() {
