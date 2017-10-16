@@ -7,8 +7,11 @@ package br.rennan.goldplanning.controller;
 
 import java.io.Serializable;
 
+<<<<<<< HEAD:src/main/java/br/rennan/goldplanning/controller/CadastroAerodromoBean.java
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+=======
+>>>>>>> origin/master:src/main/java/br/rennan/goldplanning/controller/CadastroAerodromoBean.java
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -59,7 +62,11 @@ public class CadastroAerodromoBean implements Serializable {
         try {
             this.aerodromo = cadastroAerodromoService.salvar(aerodromo);
             limpar();
+<<<<<<< HEAD:src/main/java/br/rennan/goldplanning/controller/CadastroAerodromoBean.java
             
+=======
+
+>>>>>>> origin/master:src/main/java/br/rennan/goldplanning/controller/CadastroAerodromoBean.java
             FacesUtil.addInfoMessage("Aerodromo salvo com sucesso!");
         } catch (NegocioException ne) {
             FacesUtil.addErrorMessage(ne.getMessage());

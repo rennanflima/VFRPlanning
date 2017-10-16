@@ -22,13 +22,19 @@ import javax.validation.constraints.NotNull;
  *
  * @author rennan.lima
  */
+<<<<<<< HEAD:src/main/java/br/rennan/goldplanning/model/PlanoDeVoo.java
 @Entity
+=======
+>>>>>>> origin/master:src/main/java/br/rennan/goldplanning/model/PlanoDeVoo.java
 public class PlanoDeVoo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD:src/main/java/br/rennan/goldplanning/model/PlanoDeVoo.java
     @Id
     @GeneratedValue
+=======
+>>>>>>> origin/master:src/main/java/br/rennan/goldplanning/model/PlanoDeVoo.java
     private Long id;
     @NotNull
     @Column(nullable = false)
