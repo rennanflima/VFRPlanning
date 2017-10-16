@@ -79,7 +79,7 @@ public class Aerodromos implements Serializable {
     }
 
     public List<Aerodromo> porNome(String nome) {
-        return this.manager.createQuery("from Aerodromo where upper(nome) like :nome", Aerodromo.class)
+        return this.manager.createQuery("from Aerodromo where upper(aeronave) like :nome", Aerodromo.class)
                 .setParameter("nome", nome.toUpperCase() + "%").getResultList();
     }
 

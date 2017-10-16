@@ -1,0 +1,74 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui">
+
+
+    <ui:define name="titulo">Pesquisa de aeronaves</ui:define>
+
+    <ui:define name="corpo">
+        <h:form id="frmPesquisa">
+            <h1>Pesquisa de aeronaves</h1>
+
+            <p:messages autoUpdate="true" closable="true" />
+
+            <p:toolbar style="margin-top: 20px">
+                <p:toolbarGroup>
+                    <p:commandButton value="Pesquisar" action="#{pesquisaAeronavesBean.pesquisar}" update="@form" ajax="false"/>
+    
+                </p:toolbarGroup>
+                <p:toolbarGroup align="right">
+                    <p:button value="Novo" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable id="aeronavesTable" value="#{pesquisaAeronavesBean.aeronavesFiltradas}" var="aeronave"
+                         style="margin-top: 20px" emptyMessage="Nenhuma aeronave encontrada." rows="20"
+                         paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                <p:column headerText="Aeronave">
+                    <h:outputText value="#{aeronave.aeronave}" />
+                </p:column>
+
+                <p:column headerText="TIPO/ICAO/EST_TURB">
+                    <h:outputText value="#{aeronave.tipoIcaoEst_Turb}" />
+                </p:column>
+                
+                <p:column headerText="Esteira de Turbulência" style="text-align: center; width: 100px">
+                    <h:outputText value="#{aeronave.esteiraTurbulencia}" />
+                </p:column>
+                
+                <p:column headerText="Esteira de Turbulência" style="text-align: center; width: 100px">
+                    <h:outputText value="#{aeronave.esteiraTurbulencia}" />
+                </p:column>
+                
+                <p:column headerText="Esteira de Turbulência" style="text-align: center; width: 100px">
+                    <h:outputText value="#{aeronave.esteiraTurbulencia}" />
+                </p:column>
+
+                <p:column style="width: 100px; text-align: center">
+                    <p:button outcome="/aeronaves/cadastroAeronave" icon="ui-icon-pencil" title="Editar">
+                        <f:param name="aeronave" value="#{aeronave.id}" />
+                    </p:button>
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"
+                                     process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
+                        <f:setPropertyActionListener target="#{pesquisaAeronavesBean.aeronaveSelecionada}" 
+                                                     value="#{aeronave}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p:confirmDialog header="Exclusão de aeronave" 
+                             message="Tem certeza que deseja excluir o aeronave #{pesquisaAeronavesBean.aeronaveSelecionada.aeronave}?"
+                             widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
+                <p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+                <p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide();"
+                                 action="#{pesquisaAeronavesBean.excluir}" process="@this"
+                                 update=":frmPesquisa:aeronavesTable" />
+            </p:confirmDialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

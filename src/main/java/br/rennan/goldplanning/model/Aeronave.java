@@ -14,6 +14,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -126,6 +127,11 @@ public class Aeronave implements Serializable {
 
     public void setTipoPesoVazio(TipoPeso tipoPesoVazio) {
         this.tipoPesoVazio = tipoPesoVazio;
+    }
+    
+    @Transient
+    public String getTipoIcaoEst_Turb(){
+    	return this.tipo+"/"+this.icao+"/"+this.esteiraTurbulencia;
     }
 
     @Override
