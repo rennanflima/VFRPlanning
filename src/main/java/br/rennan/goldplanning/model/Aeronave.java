@@ -8,14 +8,12 @@ package br.rennan.goldplanning.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -62,6 +60,8 @@ public class Aeronave implements Serializable {
     private Integer pistaComPesoMaximoAltaTemperatura;
     @Column(name = "velocidade_cruzeiro")
     private Integer velocidadeCruzeiro;
+    @Column(name = "velocidade_minima")
+    private Integer velocidadeMinima;
     private Integer autonomia;
 
 
@@ -201,6 +201,15 @@ public class Aeronave implements Serializable {
 
 	public void setVelocidadeCruzeiro(Integer velocidadeCruzeiro) {
 		this.velocidadeCruzeiro = velocidadeCruzeiro;
+	}
+
+	
+	public Integer getVelocidadeMinima() {
+		return velocidadeMinima;
+	}
+
+	public void setVelocidadeMinima(Integer velocidadeMinima) {
+		this.velocidadeMinima = velocidadeMinima;
 	}
 
 	public Integer getAutonomia() {

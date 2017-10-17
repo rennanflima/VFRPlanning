@@ -6,16 +6,19 @@
 package br.rennan.goldplanning.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -42,8 +45,11 @@ public class PlanoDeVoo implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Aerodromo alternativo;
+    @Embedded
+    private CalculoPeso calculoPeso;
     @OneToMany(mappedBy = "planoDeVoo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Trecho> rota = new ArrayList<>();
+    private LocalDateTime dataCriacao;
 
     public Long getId() {
         return id;
@@ -85,13 +91,39 @@ public class PlanoDeVoo implements Serializable {
         this.alternativo = alternativo;
     }
 
-    public List<Trecho> getRota() {
+    public CalculoPeso getCalculoPeso() {
+		return calculoPeso;
+	}
+
+	public void setCalculoPeso(CalculoPeso calculoPeso) {
+		this.calculoPeso = calculoPeso;
+	}
+
+	public List<Trecho> getRota() {
         return rota;
     }
 
     public void setRota(List<Trecho> rota) {
         this.rota = rota;
     }
+    
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	@Transient
+	public boolean isNovo() {
+		return getId() == null;
+	}
+	
+	@Transient
+	public boolean isExistente() {
+		return !isNovo();
+	}
 
     @Override
     public int hashCode() {

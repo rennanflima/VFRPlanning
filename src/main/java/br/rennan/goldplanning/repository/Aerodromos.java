@@ -60,7 +60,7 @@ public class Aerodromos implements Serializable {
             return null;
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     public List<Aerodromo> filtrados(AerodromoFilter filtro) {
         Session session = manager.unwrap(Session.class);
@@ -81,9 +81,9 @@ public class Aerodromos implements Serializable {
         return manager.find(Aerodromo.class, id);
     }
 
-    public List<Aerodromo> porNome(String nome) {
-        return this.manager.createQuery("from Aerodromo where upper(aeronave) like :nome", Aerodromo.class)
-                .setParameter("nome", nome.toUpperCase() + "%").getResultList();
+    public List<Aerodromo> porIcaoComecadoEm(String icao) {
+        return this.manager.createQuery("from Aerodromo where upper(icao) like :icao", Aerodromo.class)
+                .setParameter("icao", icao.toUpperCase() + "%").getResultList();
     }
 
 }

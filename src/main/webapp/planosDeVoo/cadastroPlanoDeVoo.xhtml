@@ -6,16 +6,16 @@
     xmlns:p="http://primefaces.org/ui"
     xmlns:o="http://omnifaces.org/ui">
 
-	<!-- <f:metadata>
-		<o:viewParam name="pedido" value="#{cadastroPedidoBean.pedido}" />
-		<f:viewAction action="#{cadastroPedidoBean.inicializar}" />
-	</f:metadata> -->
-
-    <ui:define name="titulo">Novo Plano de Voo</ui:define>
+    <ui:define name="titulo">#{cadastroPlanoDeVooBean.editando ? 'Edição de Plano de Voo' : 'Novo Plano de Voo'}</ui:define>
     
     <ui:define name="corpo">
+    	<f:metadata>
+            <o:viewParam name="planoDeVoo" value="#{cadastroPlanoDeVooBean.planoDeVoo}" />
+            <f:viewAction action="#{cadastroPlanoDeVooBean.inicializar}" />
+        </f:metadata>
+        
     	<h:form id="frmCadastro">
-	    	<h1>Novo Plano de Voo</h1>
+	    	<h1>#{cadastroPlanoDeVooBean.editando ? 'Edição de Plano de Voo' : 'Novo Plano de Voo'}</h1>
 	    	
 	    	<p:messages autoUpdate="true" closable="true" />
 	    	

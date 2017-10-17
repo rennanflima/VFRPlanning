@@ -10,13 +10,19 @@
         <p:inputText id="callsign" size="20" maxlength="20" onkeyup="this.value=this.value.toUpperCase();"/>
         
         <p:outputLabel value="Origem A" for="origemA"/>
-        <p:inputText id="origemA" size="60" maxlength="80"/>
+        <p:autoComplete id="origemA" size="60" maxlength="80" value="#{cadastroPlanoDeVooBean.planoDeVoo.origem}"
+        	completeMethod="#{cadastroPlanoDeVooBean.completarAerodromo}" var="aerodromo" itemLabel="#{aerodromo.nome} #{aerodromo.municipio}" 
+        	itemValue="#{aerodromo}" forceSelection="true" />
                 
         <p:outputLabel value="Destino B" for="destinoB"/>
-        <p:inputText id="destinoB" size="60" maxlength="80"/>
+        <p:autoComplete id="destinoB" size="60" maxlength="80" value="#{cadastroPlanoDeVooBean.planoDeVoo.destino}"
+        	completeMethod="#{cadastroPlanoDeVooBean.completarAerodromo}" var="aerodromo" itemLabel="#{aerodromo.nome} #{aerodromo.municipio}" 
+        	itemValue="#{aerodromo}" forceSelection="true" />
         
         <p:outputLabel value="Alternativo C" for="alternativoC"/>
-        <p:inputText id="alternativoC" size="60" maxlength="80"/>
+        <p:autoComplete id="alternativoC" size="60" maxlength="80" value="#{cadastroPlanoDeVooBean.planoDeVoo.alternativo}"
+        	completeMethod="#{cadastroPlanoDeVooBean.completarAerodromo}" var="aerodromo" itemLabel="#{aerodromo.nome} #{aerodromo.municipio}" 
+        	itemValue="#{aerodromo}" forceSelection="true" />
         
 	</p:panelGrid>
 	
@@ -25,27 +31,30 @@
         	<p:panelGrid columns="2" id="painel2" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
         		
         		<p:outputLabel value="Aeronave" for="aeronave"/>
-        		<p:selectOneMenu id="aeronave">
-        				<f:selectItem itemLabel="Selecione a aeronave" />
-        		</p:selectOneMenu>
+        		<p:selectOneMenu id="aeronave" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave}">
+       				<f:selectItem itemLabel="Selecione a aeronave" />
+					<f:selectItems value="#{cadastroPlanoDeVooBean.listaAeronaves}" var="aeronave" 
+						itemValue="#{aeronave}" itemLabel="#{aeronave.nome}"/>
+					<p:ajax event="change" process="@this" update="tipoIcaoEst_Turb velocidadeCruzeiro velocidadeMinima autonomia consumoHora capacidadeCombustivel"/>
+				</p:selectOneMenu>
         		
         		<p:outputLabel value="Tipo/Icao/Esteira de turbulência"/>
-        		<h:outputText/>
+        		<h:outputText id="tipoIcaoEst_Turb" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.tipoIcaoEst_Turb}" />
         		
         		<p:outputLabel value="Velocidade Máxima (Kt)"/>
-        		<h:outputText/>
+        		<h:outputText id="velocidadeCruzeiro" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.velocidadeCruzeiro}" />
         		
         		<p:outputLabel value="Velocidade Mínima (Kt)"/>
-        		<h:outputText/>
+        		<h:outputText id="velocidadeMinima" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.velocidadeMinima}" />
         		
         		<p:outputLabel value="Autonomia (Nm)"/>
-        		<h:outputText/>
+        		<h:outputText id="autonomia" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.autonomia}" />
         		
         		<p:outputLabel value="Consumo (L/H)"/>
-        		<h:outputText/>
+        		<h:outputText id="consumoHora" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.consumoHora}" />
         		
-        		<p:outputLabel value="Capacidade (L)"/>
-        		<h:outputText/>
+        		<p:outputLabel value="Capacidade (L)" />
+        		<h:outputText id="capacidadeCombustivel" value="#{cadastroPlanoDeVooBean.planoDeVoo.aeronave.capacidadeCombustivel}" />
         	</p:panelGrid>
         </p:fieldset>
         
@@ -56,10 +65,10 @@
         		<p:spinner id="passageiros"/>
         		
         		<p:outputLabel value="Peso Médio Tripulantes (Kg)" for="pesoMedioTripulantes"/>
-        		<p:spinner id="pesoMedioTripulantes"/>
+        		<p:spinner id="pesoMedioTripulantes" value="#{cadastroPlanoDeVooBean.planoDeVoo.calculoPeso.pesoMedioTripulantes}"/>
         		
         		<p:outputLabel value="Peso Médio Bagagens (Kg)" for="pesoMedioBagagens"/>
-        		<p:spinner id="pesoMedioBagagens"/>
+        		<p:spinner id="pesoMedioBagagens" value="#{cadastroPlanoDeVooBean.planoDeVoo.calculoPeso.pesoMedioBagagens}"/>
         		
         		<p:outputLabel value="Peso Combustível (Kg)" for="pesoCombustível"/>
         		<p:spinner id="pesoCombustível"/>
