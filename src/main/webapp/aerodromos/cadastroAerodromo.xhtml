@@ -28,7 +28,7 @@
                 <p:toolbarGroup>
                     <p:button value="Novo" outcome="/aerodromos/cadastroAerodromo" />
                     <p:commandButton value="Salvar" id="botaoSalvar"
-                                     action="#{cadastroAerodromoBean.salvar}" update="@form" ajax="false"/>
+                                     action="#{cadastroAerodromoBean.salvar}" update="@form"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
                     <p:button value="Pesquisa" outcome="/aerodromos/pesquisaAerodromos" />
@@ -39,7 +39,8 @@
                          columnClasses="rotulo, campo">
 
                 <p:outputLabel value="ICAO" for="icao"/>
-                <p:inputText id="icao" size="20" maxlength="20" value="#{cadastroAerodromoBean.aerodromo.icao}" />
+                <p:inputText id="icao" size="20" maxlength="20" value="#{cadastroAerodromoBean.aerodromo.icao}"
+                			onkeyup="this.value=this.value.toUpperCase();"/>
 
                 <p:outputLabel value="Nome" for="nome"/>
                 <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroAerodromoBean.aerodromo.nome}"/>

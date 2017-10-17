@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 
+import br.rennan.goldplanning.model.Aerodromo;
 import br.rennan.goldplanning.model.Aeronave;
 import br.rennan.goldplanning.service.NegocioException;
 import br.rennan.goldplanning.util.jpa.Transactional;
@@ -45,6 +47,16 @@ public class Aeronaves implements Serializable {
     public List<Aeronave> todos() {
     	return manager.createQuery("from Aeronave", 
     			Aeronave.class).getResultList();
+    }
+    
+    public Aeronave porIcao(String icao) {
+        try {
+            return manager.createQuery("from Aeronave where upper(icao) = :icao", Aeronave.class)
+                    .setParameter("icao", icao.toUpperCase())
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
 }

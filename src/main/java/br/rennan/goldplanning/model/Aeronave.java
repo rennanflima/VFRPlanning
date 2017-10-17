@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  *
  * @author rennan.lima
@@ -29,8 +31,11 @@ public class Aeronave implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @NotBlank
     private String aeronave;
     private String tipo;
+    @NotBlank
+    @Column(unique = true)
     private String icao;
     @Column(name = "esteira_turbulencia")
     private String esteiraTurbulencia;

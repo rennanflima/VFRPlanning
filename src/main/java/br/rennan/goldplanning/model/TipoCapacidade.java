@@ -10,7 +10,17 @@ package br.rennan.goldplanning.model;
  * @author rennan.lima
  */
 public enum TipoCapacidade {
-     
-    LITROS, LIBRAS 
+
+	LITROS("litros"), LIBRAS("lbs");
+
+	private String descricao;
+
+	TipoCapacidade(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getDescricao() {
+		return this.descricao;
+	}
 
 }

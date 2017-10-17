@@ -5,22 +5,25 @@
  */
 package br.rennan.goldplanning.repository;
 
-import br.rennan.goldplanning.model.Aerodromo;
-import br.rennan.goldplanning.repository.filter.AerodromoFilter;
-import br.rennan.goldplanning.service.NegocioException;
-import br.rennan.goldplanning.util.jpa.Transactional;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
+
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+
+import br.rennan.goldplanning.model.Aerodromo;
+import br.rennan.goldplanning.repository.filter.AerodromoFilter;
+import br.rennan.goldplanning.service.NegocioException;
+import br.rennan.goldplanning.util.jpa.Transactional;
 
 /**
  *

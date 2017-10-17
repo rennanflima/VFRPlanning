@@ -8,55 +8,83 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:o="http://omnifaces.org/ui">
 
-    <ui:define name="titulo">#{cadastroAerodromoBean.editando ? 'Edição de aerodromo' : 'Novo aerodromo'}</ui:define>
+    <ui:define name="titulo">#{cadastroAeronaveBean.editando ? 'Edição de aeronave' : 'Novo aeronave'}</ui:define>
 
     <ui:define name="corpo">
         <f:metadata>
-            <o:viewParam name="aerodromo" value="#{cadastroAerodromoBean.aerodromo}" />
-            <f:viewAction action="#{cadastroAerodromoBean.inicializar}" />
+            <o:viewParam name="aeronave" value="#{cadastroAeronaveBean.aeronave}" />
+            <f:viewAction action="#{cadastroAeronaveBean.inicializar}" />
         </f:metadata>
 
         <h:form id="frm">
         
         	<p:focus context="frm" />
         
-            <h1>#{cadastroAerodromoBean.editando ? 'Edição de aerodromo' : 'Novo aerodromo'}</h1>
+            <h1>#{cadastroAeronaveBean.editando ? 'Edição de aeronave' : 'Nova aeronave'}</h1>
 
             <p:messages autoUpdate="true" closable="true" />
 
             <p:toolbar style="margin-top: 20px">
                 <p:toolbarGroup>
-                    <p:button value="Novo" outcome="/aerodromos/cadastroAerodromo" />
+                    <p:button value="Novo" outcome="/aeronaves/cadastroAeronave" />
                     <p:commandButton value="Salvar" id="botaoSalvar"
-                                     action="#{cadastroAerodromoBean.salvar}" update="@form" ajax="false"/>
+                                     action="#{cadastroAeronaveBean.salvar}" update="@form"/>
                 </p:toolbarGroup>
                 <p:toolbarGroup align="right">
-                    <p:button value="Pesquisa" outcome="/aerodromos/pesquisaAerodromos" />
+                    <p:button value="Pesquisa" outcome="/aeronaves/pesquisaAeronaves" />
                 </p:toolbarGroup>
             </p:toolbar>
 
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
                          columnClasses="rotulo, campo">
 
+                <p:outputLabel value="Aeronave" for="aeronave"/>
+                <p:inputText id="aeronave" size="60" maxlength="80" value="#{cadastroAeronaveBean.aeronave.aeronave}" />
+
                 <p:outputLabel value="ICAO" for="icao"/>
-                <p:inputText id="icao" size="20" maxlength="20" value="#{cadastroAerodromoBean.aerodromo.icao}" />
+                <p:inputText id="icao" size="20" maxlength="20" value="#{cadastroAeronaveBean.aeronave.icao}"
+                			onkeyup="this.value=this.value.toUpperCase();"/>
+                
+                <p:outputLabel value="Tipo" for="tipo"/>
+                <p:inputText id="tipo" size="20" maxlength="20" value="#{cadastroAeronaveBean.aeronave.tipo}"
+                			onkeyup="this.value=this.value.toUpperCase();"/>
+                
+                <p:outputLabel value="Esteira de Turbulência" for="est_turb"/>
+                <p:inputText id="est_turb" size="20" maxlength="20" value="#{cadastroAeronaveBean.aeronave.esteiraTurbulencia}"
+                			onkeyup="this.value=this.value.toUpperCase();"/>
+                
+                <p:outputLabel value="Consumo Litro/Hora" for="cons_lh"/>
+                <p:inputText id="cons_lh" value="#{cadastroAeronaveBean.aeronave.consumoLitroHora}" size="10" maxlength="10" styleClass="moeda">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                </p:inputText>
+            </p:panelGrid>                
+            <p:panelGrid columns="4" id="painelUnd" style="width: 100%; margin-top: 20px"
+                         columnClasses="rotulo, campo, rotulo, campo">
+                         
+                <p:outputLabel value="Capacidade de Combustível" for="cap_comb"/>
+                <p:inputText id="cap_comb" value="#{cadastroAeronaveBean.aeronave.capacidadeCombustivel}" 
+                				size="10" maxlength="10" styleClass="moeda">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
+                </p:inputText>
+                
+                <p:outputLabel value="Unidade de Medida da Capacidade de Combustível" for="tipo_cap_comb"/>
+                <p:selectOneMenu id="tipo_cap_comb" value="#{cadastroAeronaveBean.aeronave.tipoCapacidadeCombustivel}">
+	    			<f:selectItem itemLabel="Selecione a unidade de medida" />
+	    			<f:selectItems value="#{cadastroAeronaveBean.tiposCapacidades}" var="undCapacidade" 
+						itemLabel="#{undCapacidade}" itemValue="#{undCapacidade}"/>
+	    		</p:selectOneMenu>	
+                
+                <p:outputLabel value="Peso Vazio" for="peso_vazio"/>
+                <p:spinner id="peso_vazio" value="#{cadastroAeronaveBean.aeronave.pesoVazio}"/>
+                
+                <p:outputLabel value="Unidade de Medida do Peso Vazio" for="tipo_peso_vazio"/>
+                <p:selectOneMenu id="tipo_peso_vazio" value="#{cadastroAeronaveBean.aeronave.tipoPesoVazio}">
+	    			<f:selectItem itemLabel="Selecione a unidade de medida" />
+	    			<f:selectItems value="#{cadastroAeronaveBean.tiposPesos}" var="undPesoVazio" 
+						itemLabel="#{undPesoVazio}" itemValue="#{undPesoVazio}"/>
+	    		</p:selectOneMenu>	
+			</p:panelGrid>
 
-                <p:outputLabel value="Nome" for="nome"/>
-                <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroAerodromoBean.aerodromo.nome}"/>
-                
-                <p:outputLabel value="Município" for="municipio"/>
-                <p:inputText id="municipio" size="60" maxlength="80" value="#{cadastroAerodromoBean.aerodromo.municipio}"/>
-                
-                <p:outputLabel value="Elevação" for="elevacao"/>
-                <p:spinner id="elevacao" value="#{cadastroAerodromoBean.aerodromo.elevacao}"/>
-                
-                <p:outputLabel value="Cabeceira 1" for="cabeceira1"/>
-                <p:spinner id="cabeceira1" value="#{cadastroAerodromoBean.aerodromo.cabeceira1}"/>
-                
-                <p:outputLabel value="Cabeceira 1" for="cabeceira2"/>
-                <p:spinner id="cabeceira2" value="#{cadastroAerodromoBean.aerodromo.cabeceira2}"/>
-
-            </p:panelGrid>
         </h:form>
     </ui:define>
 

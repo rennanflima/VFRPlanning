@@ -41,6 +41,10 @@ public class PesquisaAeronavesBean implements Serializable {
 
     public PesquisaAeronavesBean() {
     }
+    
+    public void inicializar() {
+    	pesquisar();
+    }
 
     public void excluir() {
         try {
