@@ -11,7 +11,7 @@ package br.rennan.goldplanning.model;
  */
 public enum TipoCapacidade {
 
-	LITROS("litros"), LIBRAS("lbs");
+	KILOGRAMAS("Kilogramas (kg)"), LITROS("Litros (L)"), GALAO("Galão (Gal)"), POUNDS("Pounds (ibs)");
 
 	private String descricao;
 

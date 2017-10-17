@@ -57,7 +57,7 @@
                     <p:button outcome="/aeronaves/cadastroAeronave" icon="ui-icon-pencil" title="Editar">
                         <f:param name="aeronave" value="#{aeronave.id}" />
                     </p:button>
-                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"
+                    <p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show()"
                                      process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
                         <f:setPropertyActionListener target="#{pesquisaAeronavesBean.aeronaveSelecionada}" 
                                                      value="#{aeronave}" />
@@ -68,10 +68,10 @@
             <p:confirmDialog header="Exclusão de aeronave" 
                              message="Tem certeza que deseja excluir o aeronave #{pesquisaAeronavesBean.aeronaveSelecionada.aeronave}?"
                              widgetVar="confirmacaoExclusao"	id="confirmacaoExclusaoDialog">
-                <p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
-                <p:commandButton value="Sim" oncomplete="confirmacaoExclusao.hide();"
+                <p:commandButton value="Sim" oncomplete="PF('confirmacaoExclusao').hide();"
                                  action="#{pesquisaAeronavesBean.excluir}" process="@this"
                                  update=":frmPesquisa:aeronavesTable" />
+                <p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
             </p:confirmDialog>
         </h:form>
     </ui:define>

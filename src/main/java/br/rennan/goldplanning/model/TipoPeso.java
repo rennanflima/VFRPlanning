@@ -11,7 +11,7 @@ package br.rennan.goldplanning.model;
  */
 public enum TipoPeso {
     
-    KILO("kg");
+	KILOGRAMAS("Kilogramas (kg)");
 	
 	private String descricao;
 
