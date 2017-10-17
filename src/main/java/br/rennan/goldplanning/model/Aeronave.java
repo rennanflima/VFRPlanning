@@ -32,27 +32,38 @@ public class Aeronave implements Serializable {
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String aeronave;
+    private String nome;
     private String tipo;
     @NotBlank
     @Column(unique = true)
     private String icao;
     @Column(name = "esteira_turbulencia")
     private String esteiraTurbulencia;
-    @Column(name = "consumo_litro_hora", precision = 10, scale = 2)
-    private BigDecimal consumoLitroHora = BigDecimal.ZERO;
+    @Column(name = "consumo_hora", precision = 10, scale = 2)
+    private BigDecimal consumoHora = BigDecimal.ZERO;
     @Column(name = "capacidade_combustivel", precision = 10, scale = 2)
     private BigDecimal capacidadeCombustivel = BigDecimal.ZERO;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tipo_capacidade_combustivel", nullable = false, length = 20)
-    private TipoCapacidade tipoCapacidadeCombustivel;
     @Column(name = "peso_vazio", precision = 10, scale = 2)
     private BigDecimal pesoVazio = BigDecimal.ZERO;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private TipoPeso tipoPesoVazio;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal comprimento = BigDecimal.ZERO;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal envergadura = BigDecimal.ZERO;
+    @Column(precision = 10, scale = 2)
+    private BigDecimal altura = BigDecimal.ZERO;
+    private Integer passageiros;
+    @Column(name = "peso_maximo_decolagem",precision = 10, scale = 2)
+    private BigDecimal pesoMaximoDecolagem = BigDecimal.ZERO;
+    @Column(name = "peso_maximo_pouso",precision = 10, scale = 2)
+    private BigDecimal pesoMaximoPouso = BigDecimal.ZERO;
+    @Column(name = "carga_máxima_com_passageiros",precision = 10, scale = 2)
+    private BigDecimal cargaMáximaComPassageiros = BigDecimal.ZERO;
+    @Column(name = "pista_com_peso_maximo_alta_temperatura")
+    private Integer pistaComPesoMaximoAltaTemperatura;
+    @Column(name = "velocidade_cruzeiro")
+    private Integer velocidadeCruzeiro;
+    private Integer autonomia;
+
 
     public Long getId() {
         return id;
@@ -62,12 +73,12 @@ public class Aeronave implements Serializable {
         this.id = id;
     }
 
-    public String getAeronave() {
-        return aeronave;
+    public String getNome() {
+        return nome;
     }
 
-    public void setAeronave(String aeronave) {
-        this.aeronave = aeronave;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getTipo() {
@@ -94,12 +105,12 @@ public class Aeronave implements Serializable {
         this.esteiraTurbulencia = esteiraTurbulencia;
     }
 
-    public BigDecimal getConsumoLitroHora() {
-        return consumoLitroHora;
+    public BigDecimal getConsumoHora() {
+        return consumoHora;
     }
 
-    public void setConsumoLitroHora(BigDecimal consumoLitroHora) {
-        this.consumoLitroHora = consumoLitroHora;
+    public void setConsumoHora(BigDecimal consumoHora) {
+        this.consumoHora = consumoHora;
     }
 
     public BigDecimal getCapacidadeCombustivel() {
@@ -110,14 +121,6 @@ public class Aeronave implements Serializable {
         this.capacidadeCombustivel = capacidadeCombustivel;
     }
 
-    public TipoCapacidade getTipoCapacidadeCombustivel() {
-        return tipoCapacidadeCombustivel;
-    }
-
-    public void setTipoCapacidadeCombustivel(TipoCapacidade tipoCapacidadeCombustivel) {
-        this.tipoCapacidadeCombustivel = tipoCapacidadeCombustivel;
-    }
-
     public BigDecimal getPesoVazio() {
         return pesoVazio;
     }
@@ -126,15 +129,89 @@ public class Aeronave implements Serializable {
         this.pesoVazio = pesoVazio;
     }
 
-    public TipoPeso getTipoPesoVazio() {
-        return tipoPesoVazio;
-    }
-
-    public void setTipoPesoVazio(TipoPeso tipoPesoVazio) {
-        this.tipoPesoVazio = tipoPesoVazio;
-    }
     
-    @Transient
+    
+    public BigDecimal getComprimento() {
+		return comprimento;
+	}
+
+	public void setComprimento(BigDecimal comprimento) {
+		this.comprimento = comprimento;
+	}
+
+	public BigDecimal getEnvergadura() {
+		return envergadura;
+	}
+
+	public void setEnvergadura(BigDecimal envergadura) {
+		this.envergadura = envergadura;
+	}
+
+	public BigDecimal getAltura() {
+		return altura;
+	}
+
+	public void setAltura(BigDecimal altura) {
+		this.altura = altura;
+	}
+
+	public Integer getPassageiros() {
+		return passageiros;
+	}
+
+	public void setPassageiros(Integer passageiros) {
+		this.passageiros = passageiros;
+	}
+
+	public BigDecimal getPesoMaximoDecolagem() {
+		return pesoMaximoDecolagem;
+	}
+
+	public void setPesoMaximoDecolagem(BigDecimal pesoMaximoDecolagem) {
+		this.pesoMaximoDecolagem = pesoMaximoDecolagem;
+	}
+
+	public BigDecimal getPesoMaximoPouso() {
+		return pesoMaximoPouso;
+	}
+
+	public void setPesoMaximoPouso(BigDecimal pesoMaximoPouso) {
+		this.pesoMaximoPouso = pesoMaximoPouso;
+	}
+
+	public BigDecimal getCargaMáximaComPassageiros() {
+		return cargaMáximaComPassageiros;
+	}
+
+	public void setCargaMáximaComPassageiros(BigDecimal cargaMáximaComPassageiros) {
+		this.cargaMáximaComPassageiros = cargaMáximaComPassageiros;
+	}
+
+	public Integer getPistaComPesoMaximoAltaTemperatura() {
+		return pistaComPesoMaximoAltaTemperatura;
+	}
+
+	public void setPistaComPesoMaximoAltaTemperatura(Integer pistaComPesoMaximoAltaTemperatura) {
+		this.pistaComPesoMaximoAltaTemperatura = pistaComPesoMaximoAltaTemperatura;
+	}
+
+	public Integer getVelocidadeCruzeiro() {
+		return velocidadeCruzeiro;
+	}
+
+	public void setVelocidadeCruzeiro(Integer velocidadeCruzeiro) {
+		this.velocidadeCruzeiro = velocidadeCruzeiro;
+	}
+
+	public Integer getAutonomia() {
+		return autonomia;
+	}
+
+	public void setAutonomia(Integer autonomia) {
+		this.autonomia = autonomia;
+	}
+
+	@Transient
     public String getTipoIcaoEst_Turb(){
     	return this.tipo+"/"+this.icao+"/"+this.esteiraTurbulencia;
     }

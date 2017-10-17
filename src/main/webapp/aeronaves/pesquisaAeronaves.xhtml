@@ -34,7 +34,7 @@
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                 <p:column headerText="Aeronave">
-                    <h:outputText value="#{aeronave.aeronave}" />
+                    <h:outputText value="#{aeronave.nome}" />
                 </p:column>
 
                 <p:column headerText="TIPO/ICAO/EST_TURB">
@@ -42,15 +42,15 @@
                 </p:column>
                 
                 <p:column headerText="Consumo Litro/Hora" style="text-align: center; width: 100px">
-                    <h:outputText value="#{aeronave.consumoLitroHora}" />
+                    <h:outputText value="#{aeronave.consumoHora} l/h" />
                 </p:column>
                 
                 <p:column headerText="Capacidade de Combustível" style="text-align: center; width: 100px">
-                    <h:outputText value="#{aeronave.capacidadeCombustivel} #{aeronave.tipoCapacidadeCombustivel.descricao}" />
+                    <h:outputText value="#{aeronave.capacidadeCombustivel} litros" />
                 </p:column>
                 
                 <p:column headerText="Peso Vazio" style="text-align: center; width: 100px">
-                    <h:outputText value="#{aeronave.pesoVazio} #{aeronave.tipoPesoVazio.descricao}" />
+                    <h:outputText value="#{aeronave.pesoVazio} kg" />
                 </p:column>
 
                 <p:column style="width: 100px; text-align: center">

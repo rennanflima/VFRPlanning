@@ -17,5 +17,89 @@
         
         <p:outputLabel value="Alternativo C" for="alternativoC"/>
         <p:inputText id="alternativoC" size="60" maxlength="80"/>
+        
 	</p:panelGrid>
+	
+	<h:panelGrid columns="4" style="width: 100%; margin-top: 20px;">
+		<p:fieldset legend="Informações da Aeronave" style="margin-bottom:20px;">
+        	<p:panelGrid columns="2" id="painel2" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+        		
+        		<p:outputLabel value="Aeronave" for="aeronave"/>
+        		<p:selectOneMenu id="aeronave">
+        				<f:selectItem itemLabel="Selecione a aeronave" />
+        		</p:selectOneMenu>
+        		
+        		<p:outputLabel value="Tipo/Icao/Esteira de turbulência"/>
+        		<h:outputText/>
+        		
+        		<p:outputLabel value="Velocidade Máxima (Kt)"/>
+        		<h:outputText/>
+        		
+        		<p:outputLabel value="Velocidade Mínima (Kt)"/>
+        		<h:outputText/>
+        		
+        		<p:outputLabel value="Autonomia (Nm)"/>
+        		<h:outputText/>
+        		
+        		<p:outputLabel value="Consumo (L/H)"/>
+        		<h:outputText/>
+        		
+        		<p:outputLabel value="Capacidade (L)"/>
+        		<h:outputText/>
+        	</p:panelGrid>
+        </p:fieldset>
+        
+        <p:fieldset legend="Cálculo de Peso" style="margin-bottom:20px;">
+        	<p:panelGrid columns="2" id="painel3" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+        		
+        		<p:outputLabel value="Tripulantes/Passageiros" for="passageiros"/>
+        		<p:spinner id="passageiros"/>
+        		
+        		<p:outputLabel value="Peso Médio Tripulantes (Kg)" for="pesoMedioTripulantes"/>
+        		<p:spinner id="pesoMedioTripulantes"/>
+        		
+        		<p:outputLabel value="Peso Médio Bagagens (Kg)" for="pesoMedioBagagens"/>
+        		<p:spinner id="pesoMedioBagagens"/>
+        		
+        		<p:outputLabel value="Peso Combustível (Kg)" for="pesoCombustível"/>
+        		<p:spinner id="pesoCombustível"/>
+        		
+        		<p:outputLabel value="Peso Aeronave (Kg)" for="pesoAeronave"/>
+        		<p:spinner id="pesoAeronave"/>
+        		
+        		<p:outputLabel value="ZFW (Kg)" for="zfw"/>
+        		<p:spinner id="zfw"/>
+        	</p:panelGrid>
+        </p:fieldset>
+        
+        <p:fieldset legend="Regra de Voo" style="margin-bottom:20px;">
+        	<p:panelGrid columns="2" id="painel4" style="width: 100%; margin-top: 20px" columnClasses="rotulo, campo">
+        		
+        		<p:outputLabel value="Regra de Voo" for="regraVoo"/>
+        		<p:selectOneMenu id="regraVoo">
+        				<f:selectItem itemLabel="Selecione a regra de voo" />
+        		</p:selectOneMenu>
+        		
+        		<p:outputLabel value="Aerovia" for="aerovia"/>
+        		<p:selectOneMenu id="aerovia">
+        				<f:selectItem itemLabel="Selecione a aerovia" />
+        		</p:selectOneMenu>
+        		
+        		<p:outputLabel value="Medida de Combustível" for="medidaCombustivel"/>
+        		<p:selectOneMenu id="medidaCombustivel">
+        				<f:selectItem itemLabel="Selecione a medida de combustível" />
+        		</p:selectOneMenu>
+        		
+        		<p:outputLabel value="Período de Voo" for="periodoVoo"/>
+        		<p:selectOneMenu id="periodoVoo">
+        				<f:selectItem itemLabel="Selecione a período de voo" />
+        		</p:selectOneMenu>
+        		
+        		<p:outputLabel value="Contingência para Operações de Solo" for="contOperacaoSolo"/>
+        		<p:selectOneMenu id="contOperacaoSolo">
+        				<f:selectItem itemLabel="Selecione a contingência para operações de Solo" />
+        		</p:selectOneMenu>
+        	</p:panelGrid>
+       	</p:fieldset>
+    </h:panelGrid>
 </ui:composition>

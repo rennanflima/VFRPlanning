@@ -13,12 +13,12 @@
     
     <dependencies>
         <!-- Tema do Bootstrap -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.primefaces.themes</groupId>
             <artifactId>bootstrap</artifactId>
             <version>1.0.10</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency> -->
 
         <!-- Usado para geração de arquivos Excel -->
         <dependency>
@@ -142,12 +142,12 @@
         </dependency>
 
         <!-- Abstração para envio de e-mails -->
-       <!-- <dependency> 
+       <dependency> 
             <groupId>com.outjected</groupId>
             <artifactId>simple-email</artifactId>
             <version>0.2.1</version>
             <scope>compile</scope>
-        </dependency> -->
+        </dependency>
 
         <!-- Requerido para envio de e-mails -->
         <dependency>

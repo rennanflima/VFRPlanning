@@ -9,19 +9,18 @@ package br.rennan.goldplanning.model;
  *
  * @author rennan.lima
  */
-public enum TipoPeso {
-    
-	KILOGRAMAS("Kilogramas (kg)");
-	
+public enum MedidaCombustivel {
+
+	KILOGRAMAS("Kilogramas (kg)"), LITROS("Litros (L)"), GALAO("Galão (Gal)"), POUNDS("Pounds (ibs)");
+
 	private String descricao;
 
-	TipoPeso(String descricao) {
+	MedidaCombustivel(String descricao) {
 		this.descricao = descricao;
 	}
 
 	public String getDescricao() {
 		return this.descricao;
 	}
-
 
 }

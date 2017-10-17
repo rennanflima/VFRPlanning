@@ -38,8 +38,8 @@
             <p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
                          columnClasses="rotulo, campo">
 
-                <p:outputLabel value="Aeronave" for="aeronave"/>
-                <p:inputText id="aeronave" size="60" maxlength="80" value="#{cadastroAeronaveBean.aeronave.aeronave}" />
+                <p:outputLabel value="Nome" for="nome"/>
+                <p:inputText id="nome" size="60" maxlength="80" value="#{cadastroAeronaveBean.aeronave.nome}" />
 
                 <p:outputLabel value="ICAO" for="icao"/>
                 <p:inputText id="icao" size="20" maxlength="20" value="#{cadastroAeronaveBean.aeronave.icao}"
@@ -52,37 +52,57 @@
                 <p:outputLabel value="Esteira de Turbulência" for="est_turb"/>
                 <p:inputText id="est_turb" size="20" maxlength="20" value="#{cadastroAeronaveBean.aeronave.esteiraTurbulencia}"
                 			onkeyup="this.value=this.value.toUpperCase();"/>
+               	
+               	<p:outputLabel value="Passageiros" for="passageiros"/>
+                <p:spinner id="passageiros" value="#{cadastroAeronaveBean.aeronave.passageiros}"/>
                 
-                <p:outputLabel value="Consumo Litro/Hora" for="cons_lh"/>
-                <p:inputText id="cons_lh" value="#{cadastroAeronaveBean.aeronave.consumoLitroHora}" size="10" maxlength="10" styleClass="moeda">
+                <p:outputLabel value="Comprimento (m)" for="comprimento"/>
+                <p:inputText id="comprimento" value="#{cadastroAeronaveBean.aeronave.comprimento}" size="10" maxlength="10" styleClass="moeda">
                 	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
                 </p:inputText>
-            </p:panelGrid>                
-            <p:panelGrid columns="4" id="painelUnd" style="width: 100%;"
-                         columnClasses="rotulo, campo, rotulo, campo">
-                         
-                <p:outputLabel value="Capacidade de Combustível" for="cap_comb"/>
+                
+                <p:outputLabel value="Envergadura (m)" for="envergadura"/>
+                <p:inputText id="envergadura" value="#{cadastroAeronaveBean.aeronave.envergadura}" size="10" maxlength="10" styleClass="moeda">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                </p:inputText>
+                
+                <p:outputLabel value="Altura (m)" for="altura"/>
+                <p:inputText id="altura" value="#{cadastroAeronaveBean.aeronave.altura}" size="10" maxlength="10" styleClass="moeda">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                </p:inputText>
+                
+                <p:outputLabel value="Peso Vazio (kg)" for="peso_vazio"/>
+                <p:spinner id="peso_vazio" value="#{cadastroAeronaveBean.aeronave.pesoVazio}"/>
+                
+                <p:outputLabel value="Peso máximo de decolagem (kg)" for="pesoMaximoDecolagem"/>
+                <p:spinner id="pesoMaximoDecolagem" value="#{cadastroAeronaveBean.aeronave.pesoMaximoDecolagem}"/>
+                
+                <p:outputLabel value="Peso máximo de pouso (kg)" for="pesoMaximoPouso"/>
+                <p:spinner id="pesoMaximoPouso" value="#{cadastroAeronaveBean.aeronave.pesoMaximoPouso}"/>
+                
+                <p:outputLabel value="Carga máxima (com passageiros) (kg)" for="cargaMáximaComPassageiros"/>
+                <p:spinner id="cargaMáximaComPassageiros" value="#{cadastroAeronaveBean.aeronave.cargaMáximaComPassageiros}"/>
+                
+                <p:outputLabel value="Pista com peso máximo e alta temperatura (m)" for="pistaComPesoMaximoAltaTemperatura"/>
+                <p:spinner id="pistaComPesoMaximoAltaTemperatura" value="#{cadastroAeronaveBean.aeronave.pistaComPesoMaximoAltaTemperatura}"/>
+                
+                <p:outputLabel value="Velocidade de Cruzeiro (kt)" for="velocidadeCruzeiro"/>
+                <p:spinner id="velocidadeCruzeiro" value="#{cadastroAeronaveBean.aeronave.velocidadeCruzeiro}"/>
+                
+                <p:outputLabel value="Autonomia (nm)" for="autonomia"/>
+                <p:spinner id="autonomia" value="#{cadastroAeronaveBean.aeronave.autonomia}"/>
+                
+                <p:outputLabel value="Capacidade de Combustível (l)" for="cap_comb"/>
                 <p:inputText id="cap_comb" value="#{cadastroAeronaveBean.aeronave.capacidadeCombustivel}" 
                 				size="10" maxlength="10" styleClass="moeda">
                 	<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/>
                 </p:inputText>
                 
-                <p:outputLabel value="Unidade de Medida da Capacidade de Combustível" for="tipo_cap_comb"/>
-                <p:selectOneMenu id="tipo_cap_comb" value="#{cadastroAeronaveBean.aeronave.tipoCapacidadeCombustivel}">
-	    			<f:selectItem itemLabel="Selecione a unidade de medida" />
-	    			<f:selectItems value="#{cadastroAeronaveBean.tiposCapacidades}" var="undCapacidade" 
-						itemLabel="#{undCapacidade.descricao}" itemValue="#{undCapacidade}"/>
-	    		</p:selectOneMenu>	
-                
-                <p:outputLabel value="Peso Vazio" for="peso_vazio"/>
-                <p:spinner id="peso_vazio" value="#{cadastroAeronaveBean.aeronave.pesoVazio}"/>
-                
-                <p:outputLabel value="Unidade de Medida do Peso Vazio" for="tipo_peso_vazio"/>
-                <p:selectOneMenu id="tipo_peso_vazio" value="#{cadastroAeronaveBean.aeronave.tipoPesoVazio}">
-	    			<f:selectItem itemLabel="Selecione a unidade de medida" />
-	    			<f:selectItems value="#{cadastroAeronaveBean.tiposPesos}" var="undPesoVazio" 
-						itemLabel="#{undPesoVazio.descricao}" itemValue="#{undPesoVazio}"/>
-	    		</p:selectOneMenu>	
+                <p:outputLabel value="Consumo por hora (l/h)" for="consumoHora"/>
+                <p:inputText id="consumoHora" value="#{cadastroAeronaveBean.aeronave.consumoHora}" size="10" maxlength="10" styleClass="moeda">
+                	<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                </p:inputText>
+  
 			</p:panelGrid>
 
         </h:form>

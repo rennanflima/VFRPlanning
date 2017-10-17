@@ -6,16 +6,12 @@
 package br.rennan.goldplanning.controller;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.rennan.goldplanning.model.Aeronave;
-import br.rennan.goldplanning.model.TipoCapacidade;
-import br.rennan.goldplanning.model.TipoPeso;
 import br.rennan.goldplanning.service.CadastroAeronaveService;
 import br.rennan.goldplanning.service.NegocioException;
 import br.rennan.goldplanning.util.jsf.FacesUtil;
@@ -34,8 +30,6 @@ public class CadastroAeronaveBean implements Serializable {
     private CadastroAeronaveService cadastroAeronaveService;
 
     private Aeronave aeronave;
-    private List<TipoCapacidade> tiposCapacidades;
-    private List<TipoPeso> tiposPesos;
 
     public CadastroAeronaveBean() {
         limpar();
@@ -45,8 +39,6 @@ public class CadastroAeronaveBean implements Serializable {
         if (this.aeronave == null) {
             limpar();
         }
-        this.tiposPesos = Arrays.asList(TipoPeso.values());
-        this.tiposCapacidades = Arrays.asList(TipoCapacidade.values());
     }
 
     public Aeronave getAeronave() {
@@ -56,15 +48,7 @@ public class CadastroAeronaveBean implements Serializable {
     public void setAeronave(Aeronave aeronave) {
         this.aeronave = aeronave;
     }
-
-    public List<TipoCapacidade> getTiposCapacidades() {
-		return tiposCapacidades;
-	}
-
-	public List<TipoPeso> getTiposPesos() {
-		return tiposPesos;
-	}
-
+    
 	private void limpar() {
         this.aeronave = new Aeronave();
     }
