@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -17,7 +18,7 @@ public class CalculoPeso implements Serializable {
 	private Integer quantidadePassageiros;
 	@Column(name = "peso_medio_tripulantes")
 	private Integer pesoMedioTripulantes;
-	@NotBlank
+	@NotNull
 	@Column(name = "peso_medio_bagagens", nullable = false)
 	private Integer pesoMedioBagagens;
 	@Column(name = "peso_combustivel")

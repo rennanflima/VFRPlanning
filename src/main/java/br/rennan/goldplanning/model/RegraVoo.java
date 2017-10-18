@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -26,7 +27,7 @@ public class RegraVoo implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name="periodo_voo", nullable=false)
 	private PeriodoVoo periodoVoo;
-	@NotBlank
+	@NotNull
 	@Column(name="contingencia_operacao_solo", nullable=false)
 	private Boolean contingenciaOperacaoSolo;
 	

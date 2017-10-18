@@ -51,7 +51,7 @@ public class CadastroPlanoDeVooBean implements Serializable {
     
     @Produces
     private PlanoDeVoo planoDeVoo;
-    private Trecho trechoLinhaEditavel;
+    private Trecho trechoNovo;
     
     private List<Aeronave> listaAeronaves;
     private List<MedidaCombustivel> medidasCombustivel;
@@ -97,6 +97,14 @@ public class CadastroPlanoDeVooBean implements Serializable {
 		return periodosVoo;
 	}
 
+	public Trecho getTrechoNovo() {
+		return trechoNovo;
+	}
+
+	public void setTrechoNovo(Trecho trechoNovo) {
+		this.trechoNovo = trechoNovo;
+	}
+
 	private void limpar() {
         this.planoDeVoo = new PlanoDeVoo();
         this.planoDeVoo.setCalculoPeso(new CalculoPeso());
@@ -124,10 +132,16 @@ public class CadastroPlanoDeVooBean implements Serializable {
         return this.planoDeVoo.getId() != null;
     }
     
-    public void carregarTrechoLinhaEditavel() {
-    	if(this.planoDeVoo.getOrigem() != null) {
-    		this.planoDeVoo.adicionarItemVazio(this.planoDeVoo.getOrigem().getIcao());
+    public void preparaNovoTrecho(){
+    	this.trechoNovo = new Trecho();
+    	this.trechoNovo.setPlanoDeVoo(planoDeVoo);
+    	if(planoDeVoo.getOrigem() != null && planoDeVoo.getRota().size() == 0){
+    		this.trechoNovo.setOrigem(planoDeVoo.getOrigem().getIcao());
+    	} else {
+//    		Trecho auxiliar = planoDeVoo.getRota().get(planoDeVoo.getRota().size()-1);
+//    		this.trechoNovo.setOrigem(auxiliar.getDestino());
     	}
+    	System.out.println(planoDeVoo.getRota().size());
+    	System.out.println("PV: "+ planoDeVoo.getOrigem().getIcao());
     }
-
 }

@@ -122,3 +122,7 @@ h1 {
 .ui-state-disabled {
 	opacity: .80 !important;
 }
+
+.ui-datatable .ui-datatable-footer {
+    text-align: left !important;
+}

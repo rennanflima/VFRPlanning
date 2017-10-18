@@ -159,13 +159,4 @@ public class PlanoDeVoo implements Serializable {
         }
         return true;
     }
-
-    public void adicionarItemVazio(String origem) {
-		if (this.isNovo()) {
-			Trecho trecho = new Trecho();
-			trecho.setOrigem(origem);
-			trecho.setPlanoDeVoo(this);
-			this.getRota().add(trecho);
-		}
-	}
 }

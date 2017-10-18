@@ -81,11 +81,11 @@ public class Trecho implements Serializable {
         this.origem = origem;
     }
 
-    public String getTrecho() {
+    public String getDestino() {
         return destino;
     }
 
-    public void setTrecho(String destino) {
+    public void setDestino(String destino) {
         this.destino = destino;
     }
 

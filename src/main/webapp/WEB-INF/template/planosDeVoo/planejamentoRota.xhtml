@@ -4,15 +4,77 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
+    <p:commandButton value="Adicionar Trecho" oncomplete="PF('dlgTrecho').show();" 
+    				update="frmTrecho" actionListener="#{cadastroPlanoDeVooBean.preparaNovoTrecho}"/>
+    
 	<p:dataTable id="rotaTable" value="#{cadastroPlanoDeVooBean.planoDeVoo.rota}" var="trecho"
 					style="margin-top: 20px" emptyMessage="Nenhuma trecho encontrado." rows="20"
                          paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-		<p:column headerText="Origem">
+		
+		<p:column headerText="Origem" style="width: 100px;">
             <h:outputText value="#{trecho.origem}"/>
         </p:column>
         
         <p:column headerText="Destino">
-            <h:outputText />
+            <p:inputText id="destino" size="30" maxlength="80" value="#{trecho.destino}"/>
         </p:column>
+        
+        <p:column headerText="Distancia (Nm)" style="text-align: center; width: 100px">
+            <p:inputText id="distancia" size="8" value="#{trecho.destino}"/>
+        </p:column>
+        
+        <p:column headerText="Rumo" style="text-align: center; width: 100px">
+            <p:inputText id="rumo" size="8" value="#{trecho.rumoMagnetico}"/>
+        </p:column>
+        
+        <p:column headerText="Velocidade Indicada" style="text-align: center; width: 100px">
+            <p:inputText id="vi" size="8" value="#{trecho.velocidadeIndicada}"/>
+        </p:column>
+        
+        <p:column headerText="Regra Par/Impar" style="text-align: center; width: 100px">
+            <h:outputText/>
+        </p:column>
+        
+        <p:column headerText="Altitude (A) ou Nível de Voo (FL)" style="text-align: center; width: 100px">
+            <p:inputText id="alt" size="8" value="#{trecho.altitude}"/>
+        </p:column>
+        
+        <p:column headerText="Duração Estimada por Trecho" style="text-align: center; width: 150px">
+            <h:outputText/>
+        </p:column>
+        
+        <p:column headerText="Combustível">
+            <h:outputText/>
+        </p:column>
+       
 	</p:dataTable>
+	
+	<p:dialog header="Inserir novo trecho" widgetVar="dlgTrecho" modal="true" resizable="false">
+		<h:form id="frmTrecho">
+			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+                         columnClasses="rotulo, campo">
+				      
+                <p:outputLabel value="Origem" for="origem"/>       
+         		<h:outputText id="origem" value="#{cadastroPlanoDeVooBean.trechoNovo.origem}"/> 
+         		  
+         		<p:outputLabel value="Origem" for="destino"/>
+         		<p:inputText id="destino" size="60" maxlength="80" value="#{cadastroPlanoDeVooBean.trechoNovo.destino}"/>
+         		  
+         		<p:outputLabel value="Distancia (Nm)" for="distancia"/>   
+         		<p:inputText id="distancia" value="#{trecho.distancia}" size="10" maxlength="10" styleClass="moeda">
+               		<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				</p:inputText>  
+         		  
+         		<p:outputLabel value="Rumo Magnético" for="destino"/>
+         		<p:spinner id="rumo" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.rumoMagnetico}"/>  
+         		  
+         		<p:outputLabel value="Velocidade Indicada" for="vi"/>
+         		<p:spinner id="vi" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.velocidadeIndicada}"/>
+         		  
+         		<p:outputLabel value="Altitude (A) ou Nível de Voo (FL)" for="alt"/>
+         		<p:inputText id="alt" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.altitude}"/>
+         		    
+            </p:panelGrid>
+		</h:form>
+	</p:dialog>
 </ui:composition>
