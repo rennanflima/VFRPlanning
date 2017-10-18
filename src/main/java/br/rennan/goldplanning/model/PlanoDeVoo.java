@@ -47,6 +47,8 @@ public class PlanoDeVoo implements Serializable {
     private Aerodromo alternativo;
     @Embedded
     private CalculoPeso calculoPeso;
+    @Embedded
+    private RegraVoo regraVoo;
     @OneToMany(mappedBy = "planoDeVoo", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Trecho> rota = new ArrayList<>();
     private LocalDateTime dataCriacao;
@@ -97,6 +99,14 @@ public class PlanoDeVoo implements Serializable {
 
 	public void setCalculoPeso(CalculoPeso calculoPeso) {
 		this.calculoPeso = calculoPeso;
+	}
+
+	public RegraVoo getRegraVoo() {
+		return regraVoo;
+	}
+
+	public void setRegraVoo(RegraVoo regraVoo) {
+		this.regraVoo = regraVoo;
 	}
 
 	public List<Trecho> getRota() {
@@ -150,4 +160,12 @@ public class PlanoDeVoo implements Serializable {
         return true;
     }
 
+    public void adicionarItemVazio(String origem) {
+		if (this.isNovo()) {
+			Trecho trecho = new Trecho();
+			trecho.setOrigem(origem);
+			trecho.setPlanoDeVoo(this);
+			this.getRota().add(trecho);
+		}
+	}
 }

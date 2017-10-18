@@ -16,10 +16,10 @@ public class CalculoPeso implements Serializable {
 	@Column(name = "quantidade_passageiros", nullable = false)
 	private Integer quantidadePassageiros;
 	@Column(name = "peso_medio_tripulantes")
-	private Integer pesoMedioTripulantes = 70;
+	private Integer pesoMedioTripulantes;
 	@NotBlank
 	@Column(name = "peso_medio_bagagens", nullable = false)
-	private Integer pesoMedioBagagens = 35;
+	private Integer pesoMedioBagagens;
 	@Column(name = "peso_combustivel")
 	private Integer pesoCombustivel;
 	private Integer ZFW;

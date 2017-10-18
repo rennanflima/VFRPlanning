@@ -7,6 +7,7 @@ package br.rennan.goldplanning.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.inject.Produces;
@@ -16,7 +17,13 @@ import javax.inject.Named;
 
 import br.rennan.goldplanning.model.Aerodromo;
 import br.rennan.goldplanning.model.Aeronave;
+import br.rennan.goldplanning.model.CalculoPeso;
+import br.rennan.goldplanning.model.MedidaCombustivel;
+import br.rennan.goldplanning.model.PeriodoVoo;
 import br.rennan.goldplanning.model.PlanoDeVoo;
+import br.rennan.goldplanning.model.RegraVoo;
+import br.rennan.goldplanning.model.TipoRegraVoo;
+import br.rennan.goldplanning.model.Trecho;
 import br.rennan.goldplanning.repository.Aerodromos;
 import br.rennan.goldplanning.repository.Aeronaves;
 import br.rennan.goldplanning.service.CadastroPlanoDeVooService;
@@ -44,8 +51,12 @@ public class CadastroPlanoDeVooBean implements Serializable {
     
     @Produces
     private PlanoDeVoo planoDeVoo;
+    private Trecho trechoLinhaEditavel;
     
     private List<Aeronave> listaAeronaves;
+    private List<MedidaCombustivel> medidasCombustivel;
+    private List<TipoRegraVoo> regrasVoo;
+    private List<PeriodoVoo> periodosVoo;
 
     public CadastroPlanoDeVooBean() {
         limpar();
@@ -56,6 +67,9 @@ public class CadastroPlanoDeVooBean implements Serializable {
             limpar();
         }
         this.listaAeronaves = aeronaves.todos();
+        this.medidasCombustivel = Arrays.asList(MedidaCombustivel.values());
+        this.regrasVoo = Arrays.asList(TipoRegraVoo.values());
+        this.periodosVoo = Arrays.asList(PeriodoVoo.values());
     }
 
     public PlanoDeVoo getPlanoDeVoo() {
@@ -69,9 +83,26 @@ public class CadastroPlanoDeVooBean implements Serializable {
 	public List<Aeronave> getListaAeronaves() {
 		return listaAeronaves;
 	}
+	
+
+	public List<MedidaCombustivel> getMedidasCombustivel() {
+		return medidasCombustivel;
+	}
+
+	public List<TipoRegraVoo> getRegrasVoo() {
+		return regrasVoo;
+	}
+
+	public List<PeriodoVoo> getPeriodosVoo() {
+		return periodosVoo;
+	}
 
 	private void limpar() {
         this.planoDeVoo = new PlanoDeVoo();
+        this.planoDeVoo.setCalculoPeso(new CalculoPeso());
+        this.planoDeVoo.setRegraVoo(new RegraVoo());
+        this.planoDeVoo.getCalculoPeso().setPesoMedioBagagens(35);
+        this.planoDeVoo.getCalculoPeso().setPesoMedioTripulantes(70);
     }
 
     public void salvar() {
@@ -91,6 +122,12 @@ public class CadastroPlanoDeVooBean implements Serializable {
     
     public boolean isEditando() {
         return this.planoDeVoo.getId() != null;
+    }
+    
+    public void carregarTrechoLinhaEditavel() {
+    	if(this.planoDeVoo.getOrigem() != null) {
+    		this.planoDeVoo.adicionarItemVazio(this.planoDeVoo.getOrigem().getIcao());
+    	}
     }
 
 }
