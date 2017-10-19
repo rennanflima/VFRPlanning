@@ -150,7 +150,9 @@ public class CadastroPlanoDeVooBean implements Serializable {
     public void adicionarTrechoRota() {
     	try {
 	    	int alt = this.trechoNovo.retornaAltitudeInteira();
-	    	System.out.println("Alt: "+alt);
+	    	double a = alt/1000;
+	    	Long aux = Math.round(a);
+	    	alt = Integer.valueOf(aux.intValue());
 	    	if (RegraParImpar.PAR.equals(this.trechoNovo.getRegraPI())) {
 	    		if(alt % 2 != 0 && !this.trechoNovo.getRea()) {
 	    			throw new NegocioException("Altitude ou Nível de Voo incorreta! Ela deve ser par!");

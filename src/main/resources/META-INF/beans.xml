@@ -4,7 +4,7 @@
 	version="1.1" bean-discovery-mode="all">
 
 	<interceptors>
-		<class>br.rennan.goldplanning.util.jpa.TransactionInterceptor</class>
+		<class>br.rennan.vfrplanning.util.jpa.TransactionInterceptor</class>
 	</interceptors>
 
 </beans>

@@ -41,12 +41,16 @@
             <h:outputText value="#{trecho.altitude}"/>
         </p:column>
         
+        <p:column headerText="Velocidade Aerodinamica (VA)" style="text-align: center; width: 150px">
+            <h:outputText  value="#{trecho.velocidadeAerodinamica}"/>
+        </p:column>
+        
         <p:column headerText="Velocidade de Solo" style="text-align: center; width: 150px">
             <h:outputText  value="#{trecho.velocidadeSolo}"/>
         </p:column>
         
         <p:column headerText="Duração Estimada por Trecho" style="text-align: center; width: 150px">
-            <h:outputText  value="#{trecho.horaEstimadaSobrevoo}"/>
+            <h:outputText  value="#{trecho.duracaoEstimadaTrecho}"/>
         </p:column>
         
         <p:column headerText="Combustível">

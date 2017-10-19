@@ -6,8 +6,8 @@
         </Console>
 		
         <RollingFile name="arquivo"
-                     fileName="${sys:catalina.home}/logs/goldplaning.log"
-                     filePattern="${sys:catalina.home}/logs/goldplaning-%d{yyyy-MM-dd}-%i.log">
+                     fileName="${sys:catalina.home}/logs/vfrplaning.log"
+                     filePattern="${sys:catalina.home}/logs/vfrplaning-%d{yyyy-MM-dd}-%i.log">
 		
             <PatternLayout pattern="%d %-5p [%c] %m%n" />
 			

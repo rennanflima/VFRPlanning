@@ -60,8 +60,10 @@ public class Trecho implements Serializable {
     private Integer direcaoVentoVoo;
     @Column(name = "velocidade_vento_voo")
     private Integer velocidadeVentoVoo;
+    @Column(name = "velocidade_aerodinamica")
+    private Integer velocidadeAerodinamica;
     @Column(name = "velocidade_solo")
-    private Double velocidadeSolo;
+    private Integer velocidadeSolo;
     @Column(name = "duracao_estimada_trecho", nullable = false)
     private LocalTime duracaoEstimadaTrecho;
     @Column(name = "hora_estimada_sobrevoo")
@@ -161,11 +163,19 @@ public class Trecho implements Serializable {
         this.velocidadeVentoVoo = velocidadeVentoVoo;
     }
 
-    public Double getVelocidadeSolo() {
+    public Integer getVelocidadeAerodinamica() {
+		return velocidadeAerodinamica;
+	}
+
+	public void setVelocidadeAerodinamica(Integer velocidadeAerodinamica) {
+		this.velocidadeAerodinamica = velocidadeAerodinamica;
+	}
+
+	public Integer getVelocidadeSolo() {
         return velocidadeSolo;
     }
 
-    public void setVelocidadeSolo(Double velocidadeSolo) {
+    public void setVelocidadeSolo(Integer velocidadeSolo) {
         this.velocidadeSolo = velocidadeSolo;
     }
 
@@ -242,41 +252,47 @@ public class Trecho implements Serializable {
         return true;
     }
     
-    @Transient
-    public Double calcularVelocidadeAerodinamica() {
-    	Double velocidadeAerodinamica = null;
+    public void calcularVelocidadeAerodinamica() {
     	if(this.altitude != null && this.velocidadeIndicada != null) {
-    		velocidadeAerodinamica = ((this.velocidadeIndicada*0.02)*(retornaAltitudeInteira()/1000))+this.velocidadeIndicada;
-			
+    		double va = ((this.velocidadeIndicada*0.02)*(retornaAltitudeInteira()/1000))+this.velocidadeIndicada;
+    		Long aux = Math.round(va);
+    		this.velocidadeAerodinamica = Integer.valueOf(aux.intValue());
     	}
-    	return velocidadeAerodinamica;
     }
     
     public void calcularVelocidadeSolo() {
-    	Double va = calcularVelocidadeAerodinamica();
+    	if(this.direcaoVentoVoo == null && this.velocidadeVentoVoo == null){
+    		this.direcaoVentoVoo = 1;
+    		this.velocidadeVentoVoo = 1;
+    	}
     	double be30 = (Math.PI/180)*this.direcaoVentoVoo;
     	double bd30 = (Math.PI/180)*this.rumoMagnetico; 
-    	double bf30 = ((this.velocidadeVentoVoo/va)*Math.sin(be30-bd30));
-    	this.velocidadeSolo = ((va * Math.sqrt(1 - Math.pow(bf30,2))) - (this.velocidadeVentoVoo * Math.cos(be30-bd30)));
+    	double bf30 = ((this.velocidadeVentoVoo/this.velocidadeAerodinamica)*Math.sin(be30-bd30));
+    	double vs = ((this.velocidadeAerodinamica * Math.sqrt(1 - Math.pow(bf30,2))) - (this.velocidadeVentoVoo * Math.cos(be30-bd30)));
+    	Long aux = Math.round(vs);
+    	this.velocidadeSolo = Integer.valueOf(aux.intValue());
     }
     
     @Transient
     public Integer retornaAltitudeInteira() {
     	Integer alt = null;
     	if(this.altitude.charAt(0) == 'A') {
-    		alt = Integer.parseInt(this.altitude.substring(1, 3));
+    		alt = Integer.parseInt(this.altitude.substring(1, this.altitude.length()));
     	}else {
-    		alt = Integer.parseInt(this.altitude.substring(2, 4));
+    		alt = Integer.parseInt(this.altitude.substring(2, this.altitude.length()));
     	}
+    	alt = alt * 100;
     	return alt;
     } 
     
     public void calcularHoraEstimadaSobrevoo() {
-    	/*Double hora = ((this.distancia/(this.velocidadeSolo/60))*60)/86400;*/
-    	Double hora = ((this.distancia/(this.velocidadeIndicada/60))*60)/86400;
-    	String stringH = String.valueOf(hora);
-    	this.horaEstimadaSobrevoo = LocalTime.ofSecondOfDay(Long.parseLong(stringH));
-    	
+    	double auxvi = (double) this.velocidadeIndicada/60;
+    	double auxSegundos = (double) (this.distancia/auxvi)*60;
+    	int segundo = (int) auxSegundos % 60;
+    	double auxMinutos = (double) auxSegundos / 60;
+    	int minuto = (int) auxMinutos % 60;
+    	int hora = (int) auxMinutos / 60;
+    	this.duracaoEstimadaTrecho = LocalTime.of(hora, minuto, segundo);
     } 
 
 }
