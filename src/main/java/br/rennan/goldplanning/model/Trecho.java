@@ -11,11 +11,16 @@ import java.time.LocalTime;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -36,8 +41,8 @@ public class Trecho implements Serializable {
     @Column(nullable = false)
     private String destino;
     @NotNull
-    @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal distancia = BigDecimal.ZERO;
+    @Column(nullable = false)
+    private Double distancia;
     @NotNull
     @Column(name = "rumo_magnetico", nullable = false)
     private Integer rumoMagnetico;
@@ -47,18 +52,21 @@ public class Trecho implements Serializable {
     @NotNull
     @Column(nullable = false)
     private String altitude;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "regra_par_impar")
+    private RegraParImpar regraPI;
+	private Boolean rea;
     @Column(name = "direcao_vento_voo")
     private Integer direcaoVentoVoo;
     @Column(name = "velocidade_vento_voo")
     private Integer velocidadeVentoVoo;
     @Column(name = "velocidade_solo")
-    private Integer velocidadeSolo;
+    private Double velocidadeSolo;
     @Column(name = "duracao_estimada_trecho", nullable = false)
     private LocalTime duracaoEstimadaTrecho;
     @Column(name = "hora_estimada_sobrevoo")
     private LocalTime horaEstimadaSobrevoo;
-    @Column(precision = 10, scale = 2)
-    private BigDecimal combustivel = BigDecimal.ZERO;
+    private Double combustivel;
     @Column(columnDefinition = "text")
     private String observacao;
     @ManyToOne
@@ -89,11 +97,11 @@ public class Trecho implements Serializable {
         this.destino = destino;
     }
 
-    public BigDecimal getDistancia() {
+    public Double getDistancia() {
         return distancia;
     }
 
-    public void setDistancia(BigDecimal distancia) {
+    public void setDistancia(Double distancia) {
         this.distancia = distancia;
     }
 
@@ -120,8 +128,24 @@ public class Trecho implements Serializable {
     public void setAltitude(String altitude) {
         this.altitude = altitude;
     }
+    
+    public Boolean getRea() {
+		return rea;
+	}
 
-    public Integer getDirecaoVentoVoo() {
+	public void setRea(Boolean rea) {
+		this.rea = rea;
+	}
+
+	public RegraParImpar getRegraPI() {
+		return regraPI;
+	}
+
+	public void setRegraPI(RegraParImpar regraPI) {
+		this.regraPI = regraPI;
+	}
+
+	public Integer getDirecaoVentoVoo() {
         return direcaoVentoVoo;
     }
 
@@ -137,11 +161,11 @@ public class Trecho implements Serializable {
         this.velocidadeVentoVoo = velocidadeVentoVoo;
     }
 
-    public Integer getVelocidadeSolo() {
+    public Double getVelocidadeSolo() {
         return velocidadeSolo;
     }
 
-    public void setVelocidadeSolo(Integer velocidadeSolo) {
+    public void setVelocidadeSolo(Double velocidadeSolo) {
         this.velocidadeSolo = velocidadeSolo;
     }
 
@@ -161,11 +185,11 @@ public class Trecho implements Serializable {
         this.horaEstimadaSobrevoo = horaEstimadaSobrevoo;
     }
 
-    public BigDecimal getCombustivel() {
+    public Double getCombustivel() {
         return combustivel;
     }
 
-    public void setCombustivel(BigDecimal combustivel) {
+    public void setCombustivel(Double combustivel) {
         this.combustivel = combustivel;
     }
 
@@ -183,6 +207,14 @@ public class Trecho implements Serializable {
 
     public void setPlanoDeVoo(PlanoDeVoo planoDeVoo) {
         this.planoDeVoo = planoDeVoo;
+    }
+    
+    public void defineRegraParImpar(){
+		if(this.rumoMagnetico >= 180 || this.rumoMagnetico <= 359) {
+			this.regraPI = RegraParImpar.PAR;
+		} else {
+			this.regraPI = RegraParImpar.IMPAR;
+		}
     }
 
     @Override
@@ -209,5 +241,42 @@ public class Trecho implements Serializable {
         }
         return true;
     }
+    
+    @Transient
+    public Double calcularVelocidadeAerodinamica() {
+    	Double velocidadeAerodinamica = null;
+    	if(this.altitude != null && this.velocidadeIndicada != null) {
+    		velocidadeAerodinamica = ((this.velocidadeIndicada*0.02)*(retornaAltitudeInteira()/1000))+this.velocidadeIndicada;
+			
+    	}
+    	return velocidadeAerodinamica;
+    }
+    
+    public void calcularVelocidadeSolo() {
+    	Double va = calcularVelocidadeAerodinamica();
+    	double be30 = (Math.PI/180)*this.direcaoVentoVoo;
+    	double bd30 = (Math.PI/180)*this.rumoMagnetico; 
+    	double bf30 = ((this.velocidadeVentoVoo/va)*Math.sin(be30-bd30));
+    	this.velocidadeSolo = ((va * Math.sqrt(1 - Math.pow(bf30,2))) - (this.velocidadeVentoVoo * Math.cos(be30-bd30)));
+    }
+    
+    @Transient
+    public Integer retornaAltitudeInteira() {
+    	Integer alt = null;
+    	if(this.altitude.charAt(0) == 'A') {
+    		alt = Integer.parseInt(this.altitude.substring(1, 3));
+    	}else {
+    		alt = Integer.parseInt(this.altitude.substring(2, 4));
+    	}
+    	return alt;
+    } 
+    
+    public void calcularHoraEstimadaSobrevoo() {
+    	/*Double hora = ((this.distancia/(this.velocidadeSolo/60))*60)/86400;*/
+    	Double hora = ((this.distancia/(this.velocidadeIndicada/60))*60)/86400;
+    	String stringH = String.valueOf(hora);
+    	this.horaEstimadaSobrevoo = LocalTime.ofSecondOfDay(Long.parseLong(stringH));
+    	
+    } 
 
 }

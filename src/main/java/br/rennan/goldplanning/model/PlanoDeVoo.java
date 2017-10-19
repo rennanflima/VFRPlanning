@@ -141,6 +141,8 @@ public class PlanoDeVoo implements Serializable {
 	}
 	
 	public void adicionarTrechoRota(Trecho trecho) {
+//		trecho.calcularVelocidadeSolo();
+//		trecho.calcularHoraEstimadaSobrevoo();
 		this.rota.add(trecho);
 	}
 

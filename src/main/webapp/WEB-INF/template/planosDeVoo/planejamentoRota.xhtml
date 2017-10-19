@@ -22,7 +22,7 @@
         </p:column>
         
         <p:column headerText="Distancia (Nm)" style="text-align: center; width: 100px">
-            <h:outputText value="#{trecho.destino}"/>
+            <h:outputText value="#{trecho.distancia}"/>
         </p:column>
         
         <p:column headerText="Rumo" style="text-align: center; width: 100px">
@@ -34,15 +34,19 @@
         </p:column>
         
         <p:column headerText="Regra Par/Impar" style="text-align: center; width: 100px">
-            <h:outputText/>
+            <h:outputText  value="#{trecho.regraPI}"/>
         </p:column>
         
         <p:column headerText="Altitude (A) ou Nível de Voo (FL)" style="text-align: center; width: 100px">
             <h:outputText value="#{trecho.altitude}"/>
         </p:column>
         
+        <p:column headerText="Velocidade de Solo" style="text-align: center; width: 150px">
+            <h:outputText  value="#{trecho.velocidadeSolo}"/>
+        </p:column>
+        
         <p:column headerText="Duração Estimada por Trecho" style="text-align: center; width: 150px">
-            <h:outputText/>
+            <h:outputText  value="#{trecho.horaEstimadaSobrevoo}"/>
         </p:column>
         
         <p:column headerText="Combustível">
@@ -65,18 +69,29 @@
          		<p:outputLabel value="Distancia (Nm)" for="distancia"/>   
 				<p:inputText id="distancia" value="#{cadastroPlanoDeVooBean.trechoNovo.distancia}" size="10" maxlength="10" styleClass="moeda">
                		<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/> 
-               		<f:converter converterId="bigDecimalConverter"/>
 				</p:inputText>  
          		  
          		<p:outputLabel value="Rumo Magnético" for="destino"/>
-         		<p:spinner id="rumo" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.rumoMagnetico}"/>  
+         		<p:spinner id="rumo" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.rumoMagnetico}">
+         			<p:ajax event="blur" update="regraPI" listener="#{cadastroPlanoDeVooBean.verificaRegraPI}"/>
+         		</p:spinner>  
          		  
          		<p:outputLabel value="Velocidade Indicada" for="vi"/>
          		<p:spinner id="vi" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.velocidadeIndicada}"/>
+         		
+         		<p:outputLabel value="Regra P/I" for="regraPI"/>       
+         		<h:outputText id="regraPI" value="#{cadastroPlanoDeVooBean.trechoNovo.regraPI}"/>
          		  
+         		<p:outputLabel value="REA / REH ?"
+					for="rea" />
+				<p:selectBooleanButton id="rea"
+					value="#{cadastroPlanoDeVooBean.trechoNovo.rea}"
+					onLabel="Sim" offLabel="Não" onIcon="ui-icon-check"
+					offIcon="ui-icon-close" style="width:60px" />
+         		
          		<p:outputLabel value="Altitude (A) ou Nível de Voo (FL)" for="alt"/>
-         		<p:inputText id="alt" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.altitude}" onkeyup="this.value=this.value.toUpperCase();"/>
-         		    
+         		<p:inputText id="alt" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.altitude}" 
+         					onkeyup="this.value=this.value.toUpperCase();"/>
             </p:panelGrid>
             
             <p:commandButton style="margin-top: 10px; float: right" value="Adicionar" action="#{cadastroPlanoDeVooBean.adicionarTrechoRota}" 

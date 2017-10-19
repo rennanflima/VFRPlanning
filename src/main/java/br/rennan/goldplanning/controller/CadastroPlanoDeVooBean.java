@@ -23,6 +23,7 @@ import br.rennan.goldplanning.model.CalculoPeso;
 import br.rennan.goldplanning.model.MedidaCombustivel;
 import br.rennan.goldplanning.model.PeriodoVoo;
 import br.rennan.goldplanning.model.PlanoDeVoo;
+import br.rennan.goldplanning.model.RegraParImpar;
 import br.rennan.goldplanning.model.RegraVoo;
 import br.rennan.goldplanning.model.TipoRegraVoo;
 import br.rennan.goldplanning.model.Trecho;
@@ -147,9 +148,28 @@ public class CadastroPlanoDeVooBean implements Serializable {
     }
     
     public void adicionarTrechoRota() {
-    	this.auxTrechoDestino = this.trechoNovo.getDestino();
-    	this.planoDeVoo.adicionarTrechoRota(trechoNovo);
-    	FacesUtil.addInfoMessage("Trecho adicionado com sucesso!");
-    	preparaNovoTrecho();
+    	try {
+	    	int alt = this.trechoNovo.retornaAltitudeInteira();
+	    	System.out.println("Alt: "+alt);
+	    	if (RegraParImpar.PAR.equals(this.trechoNovo.getRegraPI())) {
+	    		if(alt % 2 != 0 && !this.trechoNovo.getRea()) {
+	    			throw new NegocioException("Altitude ou Nível de Voo incorreta! Ela deve ser par!");
+	    		}
+	    	}else {
+	    		if(alt % 2 == 0 && !this.trechoNovo.getRea()) {
+	    			throw new NegocioException("Altitude ou Nível de Voo incorreta! Ela deve ser impar!");
+	    		}
+	    	}
+	    	this.auxTrechoDestino = this.trechoNovo.getDestino();
+	    	this.planoDeVoo.adicionarTrechoRota(trechoNovo);
+	    	FacesUtil.addInfoMessage("Trecho adicionado com sucesso!");
+	    	preparaNovoTrecho();
+	    } catch (NegocioException ne) {
+	    	FacesUtil.addErrorMessage(ne.getMessage());
+	    }
     } 
+    
+    public void verificaRegraPI() {
+    	this.trechoNovo.defineRegraParImpar();
+    }
 }
