@@ -134,6 +134,15 @@ public class PlanoDeVoo implements Serializable {
 	public boolean isExistente() {
 		return !isNovo();
 	}
+	
+	@Transient
+	public boolean isNaoTemAerodromoOrigem() {
+		return getOrigem() == null;
+	}
+	
+	public void adicionarTrechoRota(Trecho trecho) {
+		this.rota.add(trecho);
+	}
 
     @Override
     public int hashCode() {

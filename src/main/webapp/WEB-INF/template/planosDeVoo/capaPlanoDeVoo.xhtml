@@ -17,7 +17,7 @@
         <p:autoComplete id="origemA" size="20" maxlength="20" value="#{cadastroPlanoDeVooBean.planoDeVoo.origem}"
         	completeMethod="#{cadastroPlanoDeVooBean.completarAerodromo}" var="aerodromo" itemLabel="#{aerodromo.icao}" 
         	itemValue="#{aerodromo}" forceSelection="true">
-        	<p:ajax event="itemSelect" update="origem"/>
+        	<p:ajax event="itemSelect" update="origem tabViewPV:addTrecho"/>
         </p:autoComplete>
         <h:outputText id="origem" value="#{cadastroPlanoDeVooBean.planoDeVoo.origem.nomeAeroporto}" />
                 

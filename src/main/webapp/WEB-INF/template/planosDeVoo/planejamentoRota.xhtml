@@ -4,8 +4,10 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
-    <p:commandButton value="Adicionar Trecho" oncomplete="PF('dlgTrecho').show();" 
-    				update="frmTrecho" actionListener="#{cadastroPlanoDeVooBean.preparaNovoTrecho}"/>
+    <p:commandButton value="Adicionar Trecho" type="button" id="addTrecho"  
+    				style="margin-top: 20px;" disabled="#{cadastroPlanoDeVooBean.planoDeVoo.naoTemAerodromoOrigem}" >
+    	<p:ajax event="click" listener="#{cadastroPlanoDeVooBean.preparaNovoTrecho}" oncomplete="PF('dlgTrecho').show();" update="frmTrecho:gridTrecho"/>
+    </p:commandButton>
     
 	<p:dataTable id="rotaTable" value="#{cadastroPlanoDeVooBean.planoDeVoo.rota}" var="trecho"
 					style="margin-top: 20px" emptyMessage="Nenhuma trecho encontrado." rows="20"
@@ -16,19 +18,19 @@
         </p:column>
         
         <p:column headerText="Destino">
-            <p:inputText id="destino" size="30" maxlength="80" value="#{trecho.destino}"/>
+            <h:outputText value="#{trecho.destino}"/>
         </p:column>
         
         <p:column headerText="Distancia (Nm)" style="text-align: center; width: 100px">
-            <p:inputText id="distancia" size="8" value="#{trecho.destino}"/>
+            <h:outputText value="#{trecho.destino}"/>
         </p:column>
         
         <p:column headerText="Rumo" style="text-align: center; width: 100px">
-            <p:inputText id="rumo" size="8" value="#{trecho.rumoMagnetico}"/>
+            <h:outputText value="#{trecho.rumoMagnetico}"/>
         </p:column>
         
         <p:column headerText="Velocidade Indicada" style="text-align: center; width: 100px">
-            <p:inputText id="vi" size="8" value="#{trecho.velocidadeIndicada}"/>
+            <h:outputText value="#{trecho.velocidadeIndicada}"/>
         </p:column>
         
         <p:column headerText="Regra Par/Impar" style="text-align: center; width: 100px">
@@ -36,7 +38,7 @@
         </p:column>
         
         <p:column headerText="Altitude (A) ou Nível de Voo (FL)" style="text-align: center; width: 100px">
-            <p:inputText id="alt" size="8" value="#{trecho.altitude}"/>
+            <h:outputText value="#{trecho.altitude}"/>
         </p:column>
         
         <p:column headerText="Duração Estimada por Trecho" style="text-align: center; width: 150px">
@@ -49,20 +51,21 @@
        
 	</p:dataTable>
 	
-	<p:dialog header="Inserir novo trecho" widgetVar="dlgTrecho" modal="true" resizable="false">
+	<p:dialog header="Inserir novo trecho" widgetVar="dlgTrecho" modal="true" resizable="false" onShow="configurarMoeda();">
 		<h:form id="frmTrecho">
-			<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+			<p:panelGrid id="gridTrecho" columns="2" style="width: 100%; margin-top: 20px"
                          columnClasses="rotulo, campo">
 				      
                 <p:outputLabel value="Origem" for="origem"/>       
          		<h:outputText id="origem" value="#{cadastroPlanoDeVooBean.trechoNovo.origem}"/> 
          		  
-         		<p:outputLabel value="Origem" for="destino"/>
+         		<p:outputLabel value="Destino" for="destino"/>
          		<p:inputText id="destino" size="60" maxlength="80" value="#{cadastroPlanoDeVooBean.trechoNovo.destino}"/>
          		  
          		<p:outputLabel value="Distancia (Nm)" for="distancia"/>   
-         		<p:inputText id="distancia" value="#{trecho.distancia}" size="10" maxlength="10" styleClass="moeda">
-               		<f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+				<p:inputText id="distancia" value="#{cadastroPlanoDeVooBean.trechoNovo.distancia}" size="10" maxlength="10" styleClass="moeda">
+               		<f:convertNumber maxFractionDigits="2" minFractionDigits="2"/> 
+               		<f:converter converterId="bigDecimalConverter"/>
 				</p:inputText>  
          		  
          		<p:outputLabel value="Rumo Magnético" for="destino"/>
@@ -72,9 +75,13 @@
          		<p:spinner id="vi" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.velocidadeIndicada}"/>
          		  
          		<p:outputLabel value="Altitude (A) ou Nível de Voo (FL)" for="alt"/>
-         		<p:inputText id="alt" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.altitude}"/>
+         		<p:inputText id="alt" size="8" value="#{cadastroPlanoDeVooBean.trechoNovo.altitude}" onkeyup="this.value=this.value.toUpperCase();"/>
          		    
             </p:panelGrid>
+            
+            <p:commandButton style="margin-top: 10px; float: right" value="Adicionar" action="#{cadastroPlanoDeVooBean.adicionarTrechoRota}" 
+            		process="@form" update="gridTrecho frmCadastro:tabViewPV:rotaTable"/>
 		</h:form>
 	</p:dialog>
 </ui:composition>
+

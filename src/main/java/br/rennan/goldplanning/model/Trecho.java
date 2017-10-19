@@ -37,7 +37,7 @@ public class Trecho implements Serializable {
     private String destino;
     @NotNull
     @Column(precision = 10, scale = 2, nullable = false)
-    private BigDecimal distancia;
+    private BigDecimal distancia = BigDecimal.ZERO;
     @NotNull
     @Column(name = "rumo_magnetico", nullable = false)
     private Integer rumoMagnetico;

@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.inject.Produces;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -57,6 +59,7 @@ public class CadastroPlanoDeVooBean implements Serializable {
     private List<MedidaCombustivel> medidasCombustivel;
     private List<TipoRegraVoo> regrasVoo;
     private List<PeriodoVoo> periodosVoo;
+    private String auxTrechoDestino;
 
     public CadastroPlanoDeVooBean() {
         limpar();
@@ -83,7 +86,6 @@ public class CadastroPlanoDeVooBean implements Serializable {
 	public List<Aeronave> getListaAeronaves() {
 		return listaAeronaves;
 	}
-	
 
 	public List<MedidaCombustivel> getMedidasCombustivel() {
 		return medidasCombustivel;
@@ -111,6 +113,8 @@ public class CadastroPlanoDeVooBean implements Serializable {
         this.planoDeVoo.setRegraVoo(new RegraVoo());
         this.planoDeVoo.getCalculoPeso().setPesoMedioBagagens(35);
         this.planoDeVoo.getCalculoPeso().setPesoMedioTripulantes(70);
+        
+        this.trechoNovo = new Trecho();
     }
 
     public void salvar() {
@@ -138,10 +142,14 @@ public class CadastroPlanoDeVooBean implements Serializable {
     	if(planoDeVoo.getOrigem() != null && planoDeVoo.getRota().size() == 0){
     		this.trechoNovo.setOrigem(planoDeVoo.getOrigem().getIcao());
     	} else {
-//    		Trecho auxiliar = planoDeVoo.getRota().get(planoDeVoo.getRota().size()-1);
-//    		this.trechoNovo.setOrigem(auxiliar.getDestino());
+    		this.trechoNovo.setOrigem(auxTrechoDestino);
     	}
-    	System.out.println(planoDeVoo.getRota().size());
-    	System.out.println("PV: "+ planoDeVoo.getOrigem().getIcao());
     }
+    
+    public void adicionarTrechoRota() {
+    	this.auxTrechoDestino = this.trechoNovo.getDestino();
+    	this.planoDeVoo.adicionarTrechoRota(trechoNovo);
+    	FacesUtil.addInfoMessage("Trecho adicionado com sucesso!");
+    	preparaNovoTrecho();
+    } 
 }

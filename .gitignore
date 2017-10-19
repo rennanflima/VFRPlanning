@@ -5,3 +5,5 @@ src/main/resources/META-INF/persistence.xml
 /target/
 >>>>>>> origin/master
 target/classes/META-INF/persistence.xml
+*.xml
+target/classes/META-INF/persistence.xml
