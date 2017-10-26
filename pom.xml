@@ -13,12 +13,12 @@
     
     <dependencies>
         <!-- Tema do Bootstrap -->
-        <!-- <dependency>
-            <groupId>org.primefaces.themes</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>1.0.10</version>
-            <scope>compile</scope>
-        </dependency> -->
+		<dependency>
+		    <groupId>org.primefaces.themes</groupId>
+		    <artifactId>bootstrap</artifactId>
+		    <version>1.0.10</version>
+		    <scope>compile</scope>
+		</dependency>
 
         <!-- Usado para geração de arquivos Excel -->
         <dependency>
@@ -226,13 +226,12 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
+<!-- 	<repositories>
         <repository>
             <id>prime-repo</id>
             <name>PrimeFaces Maven Repository</name>
             <url>http://repository.primefaces.org</url>
             <layout>default</layout>
         </repository>
-    </repositories>
+    </repositories> -->
 </project>
